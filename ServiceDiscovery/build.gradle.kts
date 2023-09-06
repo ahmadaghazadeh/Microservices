@@ -7,8 +7,8 @@ plugins {
 	kotlin("plugin.spring") version "1.8.22"
 }
 
-group = "com.github.ahmadaghazadeh"
-version = "1.02"
+group = "com.github.ahmadahghazadeh"
+version = "0.0.1-SNAPSHOT"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
@@ -18,13 +18,18 @@ repositories {
 	mavenCentral()
 }
 
+extra["springCloudVersion"] = "2022.0.4"
+
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+	}
 }
 
 tasks.withType<KotlinCompile> {

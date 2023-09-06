@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.github.ahmad.aghazadeh"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -18,5 +18,5 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(8)
+    jvmToolchain(17)
 }
