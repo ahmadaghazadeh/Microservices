@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: bootspring-hello-world
-message: Hello from default profile
-
-server:
-  port: 8082
-

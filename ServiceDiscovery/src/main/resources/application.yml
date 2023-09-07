@@ -12,7 +12,9 @@ eureka:
         registerWithEureka: false
         fetchRegistry: false
     instance:
-      preferIpAddress: true
+        preferIpAddress: true
+    renewalPercentThreshold: 0.85
+
 
 
 
