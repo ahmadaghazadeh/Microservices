@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ServiceDiscovery" />
             <option value="$PROJECT_DIR$/Users" />
+            <option value="$PROJECT_DIR$/account" />
           </set>
         </option>
       </GradleProjectSettings>

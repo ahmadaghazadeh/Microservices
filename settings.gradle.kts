@@ -12,5 +12,6 @@ plugins {
 rootProject.name = "user-managment"
 
 include ("Users")
+include ("account")
 include ("ServiceDiscovery")
 

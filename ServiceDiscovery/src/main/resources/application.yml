@@ -14,6 +14,9 @@ eureka:
     instance:
         preferIpAddress: true
     renewalPercentThreshold: 0.85
+    server:
+        maxThreadsForPeerReplication: 0
+
 
 
 
