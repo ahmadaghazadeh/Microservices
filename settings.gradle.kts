@@ -12,6 +12,7 @@ plugins {
 rootProject.name = "user-managment"
 
 include ("Users")
+include ("apigateway")
 include ("account")
 include ("ServiceDiscovery")
 

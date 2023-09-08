@@ -1,0 +1,33 @@
+server:
+    port: 8082
+
+spring:
+    application:
+        name: api-gateway
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
+            routes:
+                - id: users-path
+                  uri: lb://user-ws
+                  predicates:
+                  - Path=/users/*
+                  - Method= GET
+                  filters:
+                  - RemoveResponseHeader=Cookie
+                  - RewritePath=/user-ws/(?<segment>.*), /$\{segment}
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8010/eureka
+
+
+
+
+
+
+
