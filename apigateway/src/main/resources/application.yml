@@ -10,15 +10,15 @@ spring:
                 locator:
                     enabled: true
                     lower-case-service-id: true
-            routes:
-                - id: users-path
-                  uri: lb://user-ws
-                  predicates:
-                  - Path=/users/*
-                  - Method= GET
-                  filters:
-                  - RemoveResponseHeader=Cookie
-                  - RewritePath=/user-ws/(?<segment>.*), /$\{segment}
+#            routes:
+#                - id: users-path
+#                  uri: lb://user-ws
+#                  predicates:
+#                  - Path=/users/*
+#                  - Method= GET
+#                  filters:
+#                  - RemoveResponseHeader=Cookie
+#                  - RewritePath=/user-ws/(?<segment>.*), /$\{segment}
 
 eureka:
     client:
