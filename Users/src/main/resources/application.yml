@@ -1,12 +1,12 @@
 server:
-    port: ${PORT:0}
+    port: ${PORT:82}
 
 spring:
-    security:
-        user:
-            name: ahmad
-            password: asd123
-            roles: ADMIN
+#    security:
+#        user:
+#            name: ahmad
+#            password: asd123
+#            roles: ADMIN
 
     application:
         name: user-ws
@@ -30,6 +30,12 @@ eureka:
             enabled: true
     instance:
         instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+springdoc:
+    swagger-ui:
+        enabled: true
+        path: /swagger-ui.html
+    api-docs.path: /api-docs
 
 
 

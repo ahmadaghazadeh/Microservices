@@ -36,9 +36,12 @@ dependencies {
 	implementation("com.h2database:h2")
 	implementation(kotlin("stdlib-jdk8"))
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.security:spring-security-config")
+	//implementation("org.springframework.boot:spring-boot-starter-security")
+	//implementation("org.springframework.security:spring-security-config")
 	implementation("org.springframework:spring-aop")
+	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
