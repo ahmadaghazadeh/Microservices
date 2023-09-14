@@ -2,11 +2,13 @@ server:
     port: ${PORT:82}
 
 spring:
-#    security:
-#        user:
-#            name: ahmad
-#            password: asd123
-#            roles: ADMIN
+    security:
+        user:
+            name: ahmad
+            password: asd123
+            roles: ADMIN
+
+
 
     application:
         name: user-ws

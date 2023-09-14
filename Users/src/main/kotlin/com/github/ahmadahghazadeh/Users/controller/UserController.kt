@@ -8,6 +8,7 @@ import mu.KLogging
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 //import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
@@ -29,7 +30,7 @@ class  UserController(
 
     companion object : KLogging()
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("anonymous()")
     @GetMapping("/{name}")
     fun get(@PathVariable("name") name: String): ResponseEntity<String> {
         logger.info("Saved course is id $name")

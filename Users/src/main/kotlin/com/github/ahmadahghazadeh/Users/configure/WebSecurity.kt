@@ -1,30 +1,44 @@
 package com.github.ahmadahghazadeh.users.configure
 
+import org.springframework.boot.fromApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-//import org.springframework.security.config.Customizer
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-//import org.springframework.security.core.userdetails.User
-//import org.springframework.security.core.userdetails.UserDetailsService
-//import org.springframework.security.provisioning.InMemoryUserDetailsManager
-//import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.config.Customizer
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
-
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 class WebSecurity {
-    // Basic Authentication
-//    @Bean
-//    fun securityFilterChain(http:HttpSecurity ): SecurityFilterChain{
-//        http.csrf {authorize ->
+    //Basic Authentication
+    @Bean
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http.csrf {
+            it.disable()
+        }
+//        http
+//        .csrf {authorize ->
 //            authorize.disable().authorizeHttpRequests {
+//                it.requestMatchers(antMatcher("/swagger-ui")).permitAll() // TODO: found a write code
 //                it.anyRequest().authenticated()
-//            }
-//        }.httpBasic(Customizer.withDefaults())
-//
-//        return http.build()
-//    }
+//        }
+//        }
+        http.authorizeHttpRequests {
+            it.requestMatchers(antMatcher("/users/**")).permitAll()
+            it.anyRequest().authenticated()
+        }.httpBasic(Customizer.withDefaults())
+
+
+        http.headers {headers ->
+            headers.frameOptions{
+                it.disable()
+            }
+        }
+
+        return http.build()
+    }
 
 //    @Bean
 //    fun  userDetailsService(): UserDetailsService{
