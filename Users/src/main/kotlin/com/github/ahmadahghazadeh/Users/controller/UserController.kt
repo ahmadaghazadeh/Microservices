@@ -7,15 +7,28 @@ import jakarta.validation.Valid
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
+@PreAuthorize("isAuthenticated()")
 class  UserController(
     val usersService: UsersService,
     val environment: Environment,
     val userMapper: UserMapper
 ) {
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/{name}")
+    fun getOnline(@PathVariable("name") name: String): ResponseEntity<String> {
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+            .body("Welcome $name, You are online and application port is ${environment.getProperty("local.server.port")}")
+    }
+
+
+    @PreAuthorize("permitAll()")
     @GetMapping("/{name}")
     fun get(@PathVariable("name") name: String): ResponseEntity<String> {
 
@@ -23,6 +36,7 @@ class  UserController(
             .body("Hello $name ${environment.getProperty("local.server.port")}")
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     fun addUser(@Valid @RequestBody createUserRequestModel: CreateUserRequestModel,): ResponseEntity<CreateUserRequestModel>{
 

@@ -2,6 +2,12 @@ server:
     port: ${PORT:0}
 
 spring:
+    security:
+        user:
+            name: ahmad
+            password: asd123
+            roles: ADMIN
+
     application:
         name: user-ws
     datasource:

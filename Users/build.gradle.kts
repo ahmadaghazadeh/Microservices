@@ -38,6 +38,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.security:spring-security-config")
+	implementation("org.springframework:spring-aop")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
