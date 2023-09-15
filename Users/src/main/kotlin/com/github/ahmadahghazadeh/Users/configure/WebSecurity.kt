@@ -3,6 +3,7 @@ package com.github.ahmadahghazadeh.users.configure
 import org.springframework.boot.fromApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -11,7 +12,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMa
 
 @Configuration
 @EnableWebSecurity
-class WebSecurity {
+class WebSecurity(val environment: Environment) {
+
     //Basic Authentication
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -24,11 +26,15 @@ class WebSecurity {
 //                it.requestMatchers(antMatcher("/swagger-ui")).permitAll() // TODO: found a write code
 //                it.anyRequest().authenticated()
 //        }
-//        }
+//        }.httpBasic(Customizer.withDefaults())
         http.authorizeHttpRequests {
             it.requestMatchers(antMatcher("/users/**")).permitAll()
+            it.requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
+            it.requestMatchers(antMatcher("/api-docs/**")).permitAll()
+            it.requestMatchers(antMatcher("/**")).permitAll() // hasIpAddress(environment.getProperty("gateway.ip"))
+
             it.anyRequest().authenticated()
-        }.httpBasic(Customizer.withDefaults())
+        }
 
 
         http.headers {headers ->

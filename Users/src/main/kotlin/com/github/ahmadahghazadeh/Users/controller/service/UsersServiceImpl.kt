@@ -11,7 +11,8 @@ import java.util.UUID
 
 @Service
 class UsersServiceImpl(private val usersRepository: UsersRepository,
-                       private val userMapper: UserMapper) : UsersService {
+                       private val userMapper: UserMapper,
+                       private val bCryptPasswordEncoder: BCryptPasswordEncoder) : UsersService {
 
 
     override fun add(user: UserDto): UserEntity {
@@ -19,7 +20,7 @@ class UsersServiceImpl(private val usersRepository: UsersRepository,
             userId = UUID.randomUUID().toString()
         }
         val userEntity = userMapper.userDtoToUserEntity(user)
-       // userEntity.encryptedPassword =bCryptPasswordEncoder.encode(user.password)
+        userEntity.encryptedPassword =bCryptPasswordEncoder.encode(user.password)
         usersRepository.save(userEntity);
         return userMapper.userDtoToUserEntity(user)
     }
