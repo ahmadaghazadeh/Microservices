@@ -4,4 +4,6 @@ import com.github.ahmadahghazadeh.users.data.UserEntity
 import org.springframework.data.repository.CrudRepository
 
 
-interface UsersRepository: CrudRepository<UserEntity, Long>
+interface UsersRepository: CrudRepository<UserEntity, Long>{
+    fun findByEmail(email: String?): UserEntity?
+}

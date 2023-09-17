@@ -1,6 +1,6 @@
 package com.github.ahmadahghazadeh.users.shared
 
-class UserDto(
+data class UserDto(
     var firstName: String?,
     var lastName: String? ,
     var email: String?,

@@ -42,6 +42,8 @@ springdoc:
 gateway:
     ip: localhost:8082
 
+token:
+    expiration_time: 86400000
 
 
 

@@ -4,24 +4,30 @@ package com.github.ahmadahghazadeh.users.controller.service
 import com.github.ahmadahghazadeh.users.data.UserEntity
 import com.github.ahmadahghazadeh.users.repository.UsersRepository
 import com.github.ahmadahghazadeh.users.shared.UserDto
-import com.github.ahmadahghazadeh.users.shared.mapper.UserMapper
+import org.modelmapper.ModelMapper
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.util.*
+
 
 @Service
 class UsersServiceImpl(private val usersRepository: UsersRepository,
-                       private val userMapper: UserMapper,
-                       private val bCryptPasswordEncoder: BCryptPasswordEncoder) : UsersService {
+                       private val modelMapper: ModelMapper,
+                        ) : UsersService {
 
 
-    override fun add(user: UserDto): UserEntity {
-        user.apply {
-            userId = UUID.randomUUID().toString()
-        }
-        val userEntity = userMapper.userDtoToUserEntity(user)
-        userEntity.encryptedPassword =bCryptPasswordEncoder.encode(user.password)
-        usersRepository.save(userEntity);
-        return userMapper.userDtoToUserEntity(user)
+    override fun add(user: UserDto): UserDto {
+
+        user.userId=(UUID.randomUUID().toString())
+        user.encryptedPassword=(BCryptPasswordEncoder().encode(user.password))
+        val userEntity = modelMapper.map(user, UserEntity::class.java)
+        usersRepository.save(userEntity)
+        return modelMapper.map(userEntity, UserDto::class.java)
+    }
+
+    override fun getUserDetailsByEmail(email: String): UserDto {
+        val userEntity: UserEntity = usersRepository.findByEmail(email) ?: throw UsernameNotFoundException(email)
+        return modelMapper.map(userEntity, UserDto::class.java)
     }
 }

@@ -1,15 +1,16 @@
 package com.github.ahmadahghazadeh.users.controller
 
 import com.github.ahmadahghazadeh.users.controller.service.UsersService
+import com.github.ahmadahghazadeh.users.shared.UserDto
 import com.github.ahmadahghazadeh.users.ui.model.CreateUserRequestModel
-import com.github.ahmadahghazadeh.users.shared.mapper.UserMapper
 import jakarta.validation.Valid
 import mu.KLogging
+import org.modelmapper.ModelMapper
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
-//import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,16 +18,16 @@ import org.springframework.web.bind.annotation.*
 class  UserController(
     val usersService: UsersService,
     val environment: Environment,
-    val userMapper: UserMapper
+    private val modelMapper: ModelMapper,
 ) {
 
-//    @PreAuthorize("hasRole('USER')")
-//    @PutMapping("/{name}")
-//    fun getOnline(@PathVariable("name") name: String): ResponseEntity<String> {
-//
-//        return ResponseEntity.status(HttpStatus.ACCEPTED)
-//            .body("Welcome $name, You are online and application port is ${environment.getProperty("local.server.port")}")
-//    }
+    //@PreAuthorize("hasRole('USER')")
+    @GetMapping("/isOnline/{name}")
+    fun getOnline(@PathVariable("name") name: String): ResponseEntity<String> {
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+            .body("Welcome $name, You are online and application port is ${environment.getProperty("local.server.port")}")
+    }
 
     companion object : KLogging()
 
@@ -39,17 +40,18 @@ class  UserController(
     }
 
 
-    @PostMapping
+    @PostMapping(consumes = [ MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE],
+        produces = [ MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE,])
     fun addUser(@Valid @RequestBody createUserRequestModel: CreateUserRequestModel): ResponseEntity<CreateUserRequestModel>{
 
         //TODO: That is a framework item. I need to handle this differently. Use kotlin mapper.
 
-       val userDto=userMapper.createUserRequestModelToUserDto(createUserRequestModel)
+       val userDto= modelMapper.map(createUserRequestModel, UserDto::class.java)
 
        usersService.add(userDto)
         // ${environment.getProperty("local.server.port")
         logger.info("Saved course is id $createUserRequestModel")
-        val returnValue=userMapper.userDtoToCreateUserRequestModel(userDto)
+        val returnValue= modelMapper.map(userDto, CreateUserRequestModel::class.java)
 
        return ResponseEntity.status(HttpStatus.CREATED)
             .body(returnValue)

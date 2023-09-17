@@ -30,7 +30,7 @@ extra["springCloudVersion"] = "2022.0.4"
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("com.h2database:h2")
@@ -41,7 +41,8 @@ dependencies {
 	implementation("org.springframework:spring-aop")
 	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
-
+	implementation("org.modelmapper:modelmapper:3.1.1")
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
