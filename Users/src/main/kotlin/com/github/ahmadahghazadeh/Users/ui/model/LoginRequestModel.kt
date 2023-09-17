@@ -1,3 +1,5 @@
 package com.github.ahmadahghazadeh.users.ui.model
 
-data class LoginRequestModel(val email: String, val password: String)
+data class LoginRequestModel(var email: String, var password: String){
+    protected constructor() : this("", "" )
+}
