@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class Security {
-//    @Bean
-//    fun bCryptPasswordEncoder() : BCryptPasswordEncoder {
-//        return BCryptPasswordEncoder()
-//    }
+    @Bean
+    fun bCryptPasswordEncoder() : BCryptPasswordEncoder {
+        return BCryptPasswordEncoder()
+    }
 }

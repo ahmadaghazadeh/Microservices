@@ -5,6 +5,8 @@ import io.swagger.v3.oas.models.info.Info
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 
 
 @Configuration
@@ -18,4 +20,6 @@ class OpenApiConfig {
                     .version("1.0")
             )
     }
+
+
 }
