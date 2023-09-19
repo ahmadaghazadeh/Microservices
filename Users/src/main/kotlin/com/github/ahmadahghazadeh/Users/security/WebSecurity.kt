@@ -39,7 +39,7 @@ class WebSecurity(private val usersService: UsersService,
         }
 
        http.addFilterBefore(getAuthenticationFilter(http), UsernamePasswordAuthenticationFilter::class.java)
-
+        http.authenticationProvider(authenticationProvider())
         http.headers {headers ->
             headers.frameOptions{
                 it.disable()

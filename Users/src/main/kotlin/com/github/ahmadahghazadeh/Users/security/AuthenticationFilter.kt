@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.io.IOException
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 
@@ -35,7 +36,7 @@ class AuthenticationFilter (private val usersService: UsersService,
         res: HttpServletResponse?
     ): Authentication {
         return try {
-            val (email, password) = ObjectMapper()
+             val (email, password) = ObjectMapper()
                 .readValue(req.inputStream, LoginRequestModel::class.java)
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
@@ -68,11 +69,12 @@ class AuthenticationFilter (private val usersService: UsersService,
                     System.currentTimeMillis() + environment.getProperty("token.expiration_time")!!.toLong()
                 )
             )
-            .signWith(key)
+            .signWith(key )
             .compact()
         res.addHeader("token", token)
         res.addHeader("userId", userDetails.userId)
     }
+
 
 
 }

@@ -5,6 +5,7 @@ import com.github.ahmadahghazadeh.users.data.UserEntity
 import com.github.ahmadahghazadeh.users.repository.UsersRepository
 import com.github.ahmadahghazadeh.users.shared.UserDto
 import org.modelmapper.ModelMapper
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -13,10 +14,11 @@ import java.util.*
 
 
 @Service
-class UsersServiceImpl(private val usersRepository: UsersRepository,
-                       private val modelMapper: ModelMapper,
-                       private val encoder: BCryptPasswordEncoder,
-                        ) : UsersService {
+class UsersServiceImpl(
+    private val usersRepository: UsersRepository,
+    private val modelMapper: ModelMapper,
+    private val encoder: BCryptPasswordEncoder,
+) : UsersService {
 
 
     override fun add(user: UserDto): UserDto {
@@ -39,8 +41,8 @@ class UsersServiceImpl(private val usersRepository: UsersRepository,
     }
 
     override fun loadUserByUsername(username: String?): UserDetails {
-        val userEntity: UserEntity = usersRepository.findByUserId(username) ?: throw UsernameNotFoundException(username)
-        return modelMapper.map(userEntity, UserDetails::class.java)
+        val userEntity: UserEntity = usersRepository.findByEmail(username) ?: throw UsernameNotFoundException(username)
+        return User(userEntity.email, userEntity.encryptedPassword, true, true, true, true, ArrayList())
     }
 
 }

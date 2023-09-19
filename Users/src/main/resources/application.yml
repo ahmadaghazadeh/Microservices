@@ -44,6 +44,6 @@ gateway:
 
 token:
     expiration_time: 86400000
-
+    secret: hfgry463hf746hf573ydh475fhy5739
 
 
