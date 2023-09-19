@@ -51,7 +51,9 @@ class WebSecurity(private val usersService: UsersService,
 
 
     fun getAuthenticationFilter(http: HttpSecurity): AuthenticationFilter {
-        return AuthenticationFilter(usersService, environment,authenticationConfiguration.authenticationManager)
+        val authenticationFilter=AuthenticationFilter(usersService, environment,authenticationConfiguration.authenticationManager)
+        authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"))
+        return authenticationFilter
     }
 
     @Bean
