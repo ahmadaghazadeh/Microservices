@@ -6,19 +6,20 @@ spring:
         name: api-gateway
     cloud:
         gateway:
-            discovery:
-                locator:
-                    enabled: true
-                    lower-case-service-id: true
-#            routes:
-#                - id: users-path
-#                  uri: lb://user-ws
-#                  predicates:
-#                  - Path=/users/*
-#                  - Method= GET
-#                  filters:
-#                  - RemoveResponseHeader=Cookie
-#                  - RewritePath=/user-ws/(?<segment>.*), /$\{segment}
+#            discovery:
+#                locator:
+#                    enabled: true
+#                    lower-case-service-id: true
+            routes:
+                - id: users-path
+                  uri: lb://users-ws
+                  predicates:
+                  - Path=/users-ws/users/isOnline
+                  - Method=GET
+                  - Header=Authorization, Bearer (.*)
+                  filters:
+                  - RemoveRequestHeader=Cookie
+                  - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
 
 eureka:
     client:

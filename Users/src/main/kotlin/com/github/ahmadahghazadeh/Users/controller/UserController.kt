@@ -23,10 +23,10 @@ class  UserController(
 
     //@PreAuthorize("hasRole('USER')")
     @GetMapping("/isOnline/{name}")
-    fun getOnline(@PathVariable("name") name: String): ResponseEntity<String> {
+    fun getOnline(): ResponseEntity<String> {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-            .body("Welcome $name, You are online and application port is ${environment.getProperty("local.server.port")}")
+            .body("Welcome, You are online and application port is ${environment.getProperty("local.server.port")}")
     }
 
     companion object : KLogging()

@@ -11,7 +11,7 @@ spring:
 
 
     application:
-        name: user-ws
+        name: users-ws
     datasource:
         url: jdbc:h2:mem:testdb
         driver-class-name: org.h2.Driver

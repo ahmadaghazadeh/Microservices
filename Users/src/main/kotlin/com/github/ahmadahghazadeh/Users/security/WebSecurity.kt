@@ -45,10 +45,8 @@ class WebSecurity(private val usersService: UsersService,
                 it.disable()
             }
         }
-
         return http.getOrBuild()
     }
-
 
     fun getAuthenticationFilter(http: HttpSecurity): AuthenticationFilter {
         val authenticationFilter=AuthenticationFilter(usersService, environment,authenticationConfiguration.authenticationManager)
