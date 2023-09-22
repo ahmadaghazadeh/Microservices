@@ -20,6 +20,36 @@ spring:
                   filters:
                   - RemoveRequestHeader=Cookie
                   - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
+                  - AuthorizationHeaderFilter
+
+                - id: users-ws
+                  uri: lb://users-ws
+                  predicates:
+                    - Path=/users-ws/users
+                    - Method=POST
+                  filters:
+                    - RemoveRequestHeader=Cookie
+                    - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
+
+                - id: users-ws-login
+                  uri: lb://users-ws
+                  predicates:
+                    - Path=/users-ws/users/login
+                    - Method=POST
+                  filters:
+                    - RemoveRequestHeader=Cookie
+                    - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
+
+                - id: users-ws-get-update-delete
+                  uri: lb://users-ws
+                  predicates:
+                    - Path=/users-ws/users/**
+                    - Method=GET,PUT,DELETE
+                    - Header=Authorization, Bearer (.*)
+                  filters:
+                    - RemoveRequestHeader=Cookie
+                    - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
+                    - AuthorizationHeaderFilter
 
 eureka:
     client:
@@ -29,6 +59,7 @@ eureka:
 
 
 
-
+token:
+  secret: eyJhbGciOiJIUzI1NiJ9.ew0KICAic3ViIjogIjEyMzQ1Njc4OTAiLA0KICAibmFtZSI6ICJBbmlzaCBOYXRoIiwNCiAgImlhdCI6IDE1MTYyMzkwMjINCn0.sgIsbMAKyqEDG8q0aC5ViW54-0XZ0xi2D7M2azSb_4k
 
 

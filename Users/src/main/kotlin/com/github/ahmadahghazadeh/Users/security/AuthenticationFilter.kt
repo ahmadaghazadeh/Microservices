@@ -6,7 +6,6 @@ import com.github.ahmadahghazadeh.users.shared.UserDto
 import com.github.ahmadahghazadeh.users.ui.model.LoginRequestModel
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
@@ -18,8 +17,9 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 import java.util.*
+import javax.crypto.SecretKey
+import javax.crypto.spec.SecretKeySpec
 
 
 class AuthenticationFilter (private val usersService: UsersService,
@@ -60,7 +60,9 @@ class AuthenticationFilter (private val usersService: UsersService,
     ) {
         val userName: String = (auth.principal as User).username
         val userDetails: UserDto = usersService.getUserDetailsByEmail(userName)
-        val key = Keys.secretKeyFor(SignatureAlgorithm.HS512) //or HS384 or HS512
+        val tokenSecret: String = environment.getProperty("token.secret")!!
+        val secretKeyBytes = Base64.getEncoder().encode(tokenSecret.toByteArray())
+        val signingKey: SecretKey = SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.jcaName)
 
         val token: String = Jwts.builder()
             .setSubject(userDetails.userId)
@@ -69,7 +71,7 @@ class AuthenticationFilter (private val usersService: UsersService,
                     System.currentTimeMillis() + environment.getProperty("token.expiration_time")!!.toLong()
                 )
             )
-            .signWith(key )
+            .signWith(signingKey )
             .compact()
         res.addHeader("token", token)
         res.addHeader("userId", userDetails.userId)
