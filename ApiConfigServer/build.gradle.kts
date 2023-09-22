@@ -22,7 +22,7 @@ extra["springCloudVersion"] = "2022.0.4"
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+	implementation("org.springframework.cloud:spring-cloud-config-server")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
