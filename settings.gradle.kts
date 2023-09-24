@@ -15,4 +15,5 @@ include ("Users")
 include ("apigateway")
 include ("account")
 include ("ServiceDiscovery")
+include ("ApiConfigServer")
 

@@ -4,7 +4,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-@EnableConfigServer
 class ApiConfigServerApplication
 
 fun main(args: Array<String>) {
