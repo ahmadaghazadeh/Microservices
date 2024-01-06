@@ -8,8 +8,6 @@ spring:
             password: asd123
             roles: ADMIN
 
-
-
     application:
         name: users-ws
     datasource:
@@ -21,7 +19,8 @@ spring:
         console:
             settings:
                 web-allow-others: true
-
+    config:
+        import: optional:configserver:http://localhost:8012
 
 eureka:
     client:

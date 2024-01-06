@@ -29,6 +29,12 @@ class  UserController(
             .body("Welcome, You are online and application port is ${environment.getProperty("local.server.port")}")
     }
 
+    @GetMapping("/isOnline/{page}")
+    fun getOnlineWithDefaulValue(@RequestParam(value = "page", defaultValue = "1", required = false) page: Int ): ResponseEntity<String> {
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+            .body("Welcome, You are online and application port is ${environment.getProperty("local.server.port")}")
+    }
     companion object : KLogging()
 
     @PreAuthorize("anonymous()")
